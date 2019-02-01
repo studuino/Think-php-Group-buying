@@ -55,6 +55,41 @@
 - 表的设计
     - 表的创建
     ![表的设计](./README/IMG/database1.png)        
+
+>TP5 WEBSERVER
+``` 
+php -S localhost:8181 router.php
+
+nohup php -S localhost:8181 router.php &
+ps aux | grep 8181
+
+php think make:controller index/Test
+```    
+> 自动化模块搭建 `build.php`
+``` 
+php think build
+```
+> 前端模块页面搭建
+``` 
+Controller>Index.php
+view>index>index.html --> public>[footer|header|main]
+[css|js|img] --> public>static>[]>css|js|img
+```
+### 主后台生活服务类模块
+- 添加分类
+``` 
+模板form表单数据->控制器->validate校验->model->入库
+{:url('控制器')}
+控制接受参数
+input('post.');
+request()->post();
+```
+- validate
+``` 
+
+```
+
+
     
     
         
