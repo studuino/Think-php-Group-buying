@@ -1,0 +1,200 @@
+#生活服务分类表
+CREATE TABLE `o2o_category`(
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `parent_id` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分类ID',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY parent_id(`parent_id`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+#城市表
+CREATE TABLE `o2o_city`(
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '城市中文名',
+  `uname` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '城市英文名称',
+  `parent_id` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分类ID',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY parent_id(`parent_id`),
+  UNIQUE KEY uname(`uname`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+#商圈表
+CREATE TABLE `o2o_area`(
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '商圈名称',
+  `city_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '城市id',
+  `parent_id` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分类ID',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY parent_id(`parent_id`),
+  KEY city_id(`city_id`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+#商户表
+CREATE TABLE `o2o_bis`(
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '商户id',
+  `name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '商户名称',
+  `email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT 'EMAIL',
+  `logo` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'LOGO',
+  `licence_logo` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '营业执照',
+  `description` TEXT NOT NULL DEFAULT '' COMMENT '描述',
+  `city_path` VARCHAR(50) NOT NULL DEFAULT '',
+  `bank_info` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '银行信息',
+  `money` DECIMAL(20,2) NOT NULL DEFAULT '0.00' COMMENT '金额',
+  `bank_name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '提现开户行名称',
+  `bank_user` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '银行账号持有人名称',
+  `faren` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '公司法人',
+  `faren_tel` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '法人联系信息',
+  `city_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '城市id',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY city_id(`city_id`),
+  KEY name(`name`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+#商户账号表
+CREATE TABLE `o2o_bis_account`(
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `username` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '登录用户名',
+  `password` CHAR(32) NOT NULL DEFAULT '' COMMENT '登录密码',
+  `code` VARCHAR (10) NOT NULL DEFAULT '' COMMENT '配合产生MD5password',
+  `bis_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商户ID',
+  `lost_login_ip` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '最后登录IP',
+  `lost_login_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后登录时间',
+  `is_main` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否为总管理员',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY bis_id(`bis_id`),
+  KEY username(`username`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+#商户门店表
+CREATE TABLE `o2o_bis_location`(
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '商户名称',
+  `logo` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'LOGO',
+  `address` VARCHAR (255) NOT NULL DEFAULT '' COMMENT '商铺地址',
+  `tel` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '商铺电话',
+  `contact` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '联系人电话',
+  `xpoint` VARCHAR (20) NOT NULL DEFAULT '' COMMENT '经度',
+  `ypoint` VARCHAR (20) NOT NULL DEFAULT '' COMMENT '纬度',
+  `bis_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商户ID',
+  `open_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '开店时间',
+  `content` TEXT NOT NULL COMMENT '门店介绍',
+  `is_main` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分店还是总店',
+  `api_address` VARCHAR (255) NOT NULL DEFAULT '' COMMENT 'API获取地址',
+  `city_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '城市id',
+  `city_path` VARCHAR(50) NOT NULL DEFAULT '',
+  `category_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分类id',
+  `category_path` VARCHAR (50) NOT NULL DEFAULT '' COMMENT '栏目PATH',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY city_id(`city_id`),
+  KEY bis_id(`bis_id`),
+  KEY category_id(`category_id`),
+  KEY name(`name`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+#团购商品表
+CREATE TABLE `o2o_deal`(
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+  `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `category_id` INT(11)  NOT NULL DEFAULT 0 COMMENT '分类id',
+  `se_category_id` INT(11) NOT NULL DEFAULT 0 COMMENT '二级分类',
+  `bis_id` INT(11) NOT NULL DEFAULT 0 COMMENT '商家ID',
+  `location_ids` VARCHAR (100) NOT NULL DEFAULT '' COMMENT '店铺ID',
+  `img` VARCHAR (200) NOT NULL DEFAULT '' COMMENT '商品图片',
+  `description` TEXT NOT NULL COMMENT '描述',
+  `start_time` INT(11) DEFAULT 0 COMMENT '商品开始时间',
+  `end_time` INT(11) DEFAULT 0 COMMENT '商品结束时间',
+  `origin_price` DECIMAL(20,2) NOT NULL DEFAULT 0.00 COMMENT '商品原价',
+  `current_price` DECIMAL (20,2) NOT NULL DEFAULT 0.00 COMMENT '商品折扣价',
+  `city_id` INT(11) NOT NULL DEFAULT 0 COMMENT '城市ID',
+  `buy_count` INT(11) NOT NULL DEFAULT 0 COMMENT '卖了多少份额',
+  `total_count` INT(11) NOT NULL DEFAULT 0 COMMENT '商品总数',
+  `coupons_begin_time` INT(11) DEFAULT 0 COMMENT '团购开始时间',
+  `coupons_end_time` INT(11) DEFAULT 0 COMMENT '团购开始时间',
+  `xpoint` VARCHAR (20) NOT NULL DEFAULT '' COMMENT '经度',
+  `ypoint` VARCHAR (20) NOT NULL DEFAULT '' COMMENT '纬度',
+  `bis_account_id` INT(10) NOT NULL DEFAULT 0 COMMENT '提交商品账号id',
+  `balance_price` DECIMAL (20,2) NOT NULL DEFAULT '0.00' COMMENT '商品结算价',
+  `notes` TEXT NOT NULL COMMENT '商品提示',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY category_id(`category_id`),
+  KEY se_category_id(`se_category_id`),
+  KEY city_id(`city_id`),
+  KEY start_time(`start_time`),
+  KEY end_time(`end_time`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+#前台用户表
+CREATE TABLE `o2o_user`(
+ `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `username` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '登录用户名',
+  `password` CHAR(32) NOT NULL DEFAULT '' COMMENT '登录密码',
+  `code` VARCHAR (10) NOT NULL DEFAULT '' COMMENT '配合产生MD5password',
+  `lost_login_ip` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '最后登录IP',
+  `lost_login_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后登录时间',
+  `email` VARCHAR (30) NOT NULL DEFAULT '' COMMENT '邮箱',
+  `mobile` VARCHAR (20) NOT NULL DEFAULT '' COMMENT '电话',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY username(`username`),
+  UNIQUE KEY email(`email`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+
+#推荐位表
+CREATE TABLE `o2o_featured`(
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+  `type` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '属性',
+  `title` VARCHAR (30) NOT NULL DEFAULT '' COMMENT 'TITLE',
+  `image` VARCHAR (255) NOT NULL DEFAULT '' COMMENT '商品图片',
+  `url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'URL',
+  `description` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '描述',
+  `listorder`INT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '状态',
+  `create_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+
+mysql -uroot -ppassword -Pport;
+CREATE DATABASE dollar_o2o DEFAULT CHARSET UTF-8;
+SOURCE SQL_FILE_PATH;
+
+
+
+
+
+
+
+
+
+
+
