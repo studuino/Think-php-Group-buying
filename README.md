@@ -86,8 +86,82 @@ request()->post();
 ```
 - validate
 ``` 
+namespace app\admin\validate;
+use think\Validate;
+class Category extends Validate
+{
+    protected $rule = [
+        ['name','require|max:10','分类名不能为空|分类名不能超过10个字符'],#id,规则,提示词
+        ['parent_id','number'],
+        ['id','number'],
+        ['status','number|in:-1,0,1','状态必须为数字|状态范围不合法'], #in 范围-1,0,1
+        ['listorder','number'],
+    ];
+//    场景设置
+    protected $scene = [
+        'add' => ['name','parent_id'],//添加功能场景设置
+        'listorder' => ['id','listorder'],//排序
+    ];
+}
 
+    public function save()
+    {
+//        print_r($_POST);
+//        dump(input('post.'));
+//        dump(request()->post());
+        $data = input('post.');
+//        $data['status'] = 10;
+        $validate = validate('Category');
+        if(!$validate->scene('add')->check($data)){ #return bool
+            $this->error($validate->getError());
+        }
+//        dump($data);
+        //把$data 提交到 model层
+    }
+    $validate->check($data) 可以直接调用不设置场景默认全部校验
 ```
+- model-save 分类数据保存
+``` 
+        //把$data 提交到 model层
+        $res = $this->obj->add($data); #1 or 0
+        if ($res){
+            $this->success('新增成功');
+        }else{
+            $this->error('新增失败');
+        }
+        
+        protected $autoWriteTimestamp = true;#自动time
+            public function add($data)
+            {
+                $data['status'] = 1;
+        //        $data['create_time'] = time();
+                return $this->save($data);
+            }
+```
+- TP5分页机制
+``` 
+model部分
+        $result =  $this->where($data)
+                    ->order($order)
+//                    ->select();
+                    ->paginate(2); #listRows每页现实多少条
+html部分
+    <div class="cl pd-5 bg-1 bk-gray mt-20 tp5-o2o">{$categorys->render()}</div>      
+```
+- 编辑功能
+> 查询数据-> 填充模板-> 提交数据->update
+``` 
+    <input type="hidden" name="id" value="{$category.id}">
+    category判断if !empty(id) ->save()
+```
+- 排序功能
+> ajax异步处理
+``` 
+table 一个排序参数
+然后 model层 通过order实现排序
+```
+- 修改状态
+> model save(状态的数组值,条件)
 
 
     
