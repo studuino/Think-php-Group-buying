@@ -163,6 +163,50 @@ table 一个排序参数
 - 修改状态
 > model save(状态的数组值,条件)
 
+### 商户模块
+- 商家入驻申请-数据准备
+- 商户入驻申请-图片上传处理
+``` 
+上传插件 uploadify
+编写image.js
+编写图片上传API接口实现异步上传
+use think\Controller;
+use think\Request;
+use think\File;
+class Image extends Controller
+{
+    public function upload()
+    {
+        $file = Request::instance()->file('file');
+        //给定一个dir
+        $info = $file->move('upload');#在入口文件public文件下new dir
+//        dump($info);
+        if($info && $info->getPathname())
+        {
+            return show(1,'success','/'.$info->getPathname());
+        }
+        return show(0,'upload,error');
+    }
+}
+js>
+js定位到上传file get file ajax到php 得到requestUrl 写入html hidden内容
+```
+- 商户入驻申请-数据库入库
+    - 利用validate机制进行数据校验 
+    - 3类数据库入库(商家基本信息,总店信息,商家账号信息)
+    ``` 
+    当商家信息入库时获取商家信息id
+    当店铺信息入库时获取写入商家id获得店铺id
+    当账号信息入库时写入商家id和店铺id
+    ```
+    - 商户入驻申请Model层code复用
+    - 提示页面开发
+- 主后台入驻列表开发
+> 商户入驻申请->主后台入驻列表页->查询->审核    
+
+
+
+
 
     
     

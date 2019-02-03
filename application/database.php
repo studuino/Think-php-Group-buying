@@ -15,11 +15,11 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'thinkphp',
+    'database'        => 'o2o',
     // 用户名
-    'username'        => 'thinkphp',
+    'username'        => 'o2o',
     // 密码
-    'password'        => 'tbmwx4KExHSC4ppZ',
+    'password'        => 'ixRfN736mKBMp4pX',
     // 端口
     'hostport'        => '',
     // 连接dsn

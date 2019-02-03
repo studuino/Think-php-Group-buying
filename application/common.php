@@ -29,3 +29,21 @@ function status ($status)
     }
 
 }
+//商户入驻申请文案
+function bisRegister($status){
+    switch ($status)
+    {
+        case 1:
+            return $status = "<span class='label label-success radius'>入驻成功</span>";
+            break;
+        case 0:
+            return $status = "<span class='label label-info radius'>待审,审核后平台会发送邮件通知,请关注</span>";
+            break;
+        case 2:
+            return $status = "<span class='label label-danger radius'>非常抱歉,您提交的材料不符合条件,请重新提交</span>";
+            break;
+        default:
+            return $status = "<span class='label label-danger radius'>非法参数</span>";
+
+    }
+}
