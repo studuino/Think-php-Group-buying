@@ -40,7 +40,7 @@ class Category extends Model
         $result =  $this->where($data)
                     ->order($order)
 //                    ->select();
-                    ->paginate(); #listRows每页现实多少条
+                    ->paginate(5); #listRows每页现实多少条
 //        echo $this->getLastSql();
 
         return $result;

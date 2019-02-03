@@ -202,7 +202,15 @@ js定位到上传file get file ajax到php 得到requestUrl 写入html hidden内�
     - 商户入驻申请Model层code复用
     - 提示页面开发
 - 主后台入驻列表开发
-> 商户入驻申请->主后台入驻列表页->查询->审核    
+> 商户入驻申请->主后台入驻列表页->查询->审核 
+``` 
+{:url}->controller->model->view
+```   
+- 主后台商户列表
+>审核通过->商户列表页呈现
+- TP5 session 处理后台登录
+
+
 
 
 

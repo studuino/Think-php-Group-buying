@@ -7,7 +7,7 @@ class Register extends  Controller
         //获取一级城市的数据
         $citys = model('City')->getNormalCitysByParentId();
         //获取一级栏目的数据
-        $categorys = model('Category')->getNormalCategoryByParentId();
+        $categorys = model('Category')->getNormalCitysByParebtId();
         return $this->fetch('',[
             'citys' => $citys,
             'categorys' => $categorys,
