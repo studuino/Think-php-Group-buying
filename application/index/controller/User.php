@@ -11,6 +11,17 @@ class User extends Controller
 
     public function register()
     {
-        return $this->fetch('register');
+        if(request()->isPost()){
+            $data = input('post.');
+//            dump($data);
+            $verifyCode = $data['verifyCode'];
+            if(!captcha_check($verifyCode)){
+                $this->error("校验失败");
+            }else{
+                echo 'success';
+            }
+        }else{
+            return $this->fetch('register');
+        }
     }
 }

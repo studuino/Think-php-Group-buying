@@ -270,7 +270,20 @@ class Login extends Controller
     - 商户管理员添加门店
     - 列表页,门店查看,下架等操作
     - 主后台管理员审核
-- 团购模块设计    
+- 团购模块设计
+
+### 前台模块
+- TP5验证码
+``` 
+composer require topthink/think-captcha
+模板中使用{:captcha_img()}
+controller校验:
+captcha_check($verifyCode)
+``` 
+- 会员注册
+
+#暂停更新 
+   
     
 
 
